@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "C91E5E36-6C43-428B-9CDA-0B97C5B91650"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7694B2BC-7C80-4DE7-A538-5DC778A15930"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Market cApp/Views/ChartViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "fetchMCData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7694B2BC-7C80-4DE7-A538-5DC778A15930 - 6fb8e6d483f4553b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Market_cApp.ChartViewController.fetchMCData() -&gt; ()"
+                  moduleName = "Market cApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DavidJacobsen/Desktop/Market%20cApp/Market%20cApp/Views/ChartViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "207"
+                  endingLineNumber = "207"
+                  offsetFromSymbolStart = "1012">
+               </Location>
+               <Location
+                  uuid = "7694B2BC-7C80-4DE7-A538-5DC778A15930 - f48bae12fdbe32d9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Market_cApp.Company, Market_cApp.CompanyError&gt;) -&gt; () in Market_cApp.ChartViewController.fetchMCData() -&gt; ()"
+                  moduleName = "Market cApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DavidJacobsen/Desktop/Market%20cApp/Market%20cApp/Views/ChartViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "208"
+                  endingLineNumber = "208"
+                  offsetFromSymbolStart = "184">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
