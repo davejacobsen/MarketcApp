@@ -16,7 +16,7 @@ class MenuTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         tableView.isScrollEnabled = false
         
         if let appVersion = UIApplication.appVersion {
@@ -60,7 +60,7 @@ class MenuTableViewController: UITableViewController {
             print("selection error")
         }
     }
-        
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -73,6 +73,10 @@ class MenuTableViewController: UITableViewController {
         } else {
             return 1
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 25
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -255,12 +255,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(available on US stock exchanges)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYa-1D-77x">
-                                <rect key="frame" x="15" y="78" width="345" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" systemColor="systemIndigoColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(market)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-DC-Yiv">
                                 <rect key="frame" x="10" y="613" width="180" height="18"/>
                                 <constraints>
@@ -270,19 +264,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tum-jd-iUA">
+                                <rect key="frame" x="128" y="85" width="119" height="22"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal" title="Industry: All " image="chevron.down" catalog="system">
+                                    <color key="titleColor" systemColor="labelColor"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kZj-Yo-BxM"/>
                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <constraints>
+                            <constraint firstItem="tum-jd-iUA" firstAttribute="top" secondItem="kZj-Yo-BxM" secondAttribute="top" constant="-3" id="G5K-pz-7Pn"/>
                             <constraint firstItem="Uu4-uf-CU5" firstAttribute="leading" secondItem="kZj-Yo-BxM" secondAttribute="leading" id="Jmz-GX-UxQ"/>
                             <constraint firstItem="EfB-Eh-afj" firstAttribute="leading" secondItem="kZj-Yo-BxM" secondAttribute="leading" constant="5" id="KmX-QW-Vc6"/>
                             <constraint firstItem="kZj-Yo-BxM" firstAttribute="trailing" secondItem="Uu4-uf-CU5" secondAttribute="trailing" id="LUy-3L-YX0"/>
-                            <constraint firstItem="kZj-Yo-BxM" firstAttribute="trailing" secondItem="mYa-1D-77x" secondAttribute="trailing" constant="15" id="MuB-jU-7q3"/>
                             <constraint firstItem="kZj-Yo-BxM" firstAttribute="bottom" secondItem="EfB-Eh-afj" secondAttribute="bottom" constant="44" id="QD5-Te-y8H"/>
                             <constraint firstItem="EfB-Eh-afj" firstAttribute="top" secondItem="sD4-DC-Yiv" secondAttribute="bottom" constant="3" id="R8A-9k-NBy"/>
-                            <constraint firstItem="mYa-1D-77x" firstAttribute="leading" secondItem="kZj-Yo-BxM" secondAttribute="leading" constant="15" id="RJw-XQ-uT9"/>
-                            <constraint firstItem="mYa-1D-77x" firstAttribute="top" secondItem="kZj-Yo-BxM" secondAttribute="top" constant="-10" id="bHo-pz-1EO"/>
-                            <constraint firstItem="mYa-1D-77x" firstAttribute="centerX" secondItem="rHS-GL-JaM" secondAttribute="centerX" id="fh5-Y3-xBL"/>
+                            <constraint firstItem="tum-jd-iUA" firstAttribute="centerX" secondItem="rHS-GL-JaM" secondAttribute="centerX" id="kqC-gK-NYI"/>
                             <constraint firstItem="kZj-Yo-BxM" firstAttribute="trailing" secondItem="EfB-Eh-afj" secondAttribute="trailing" constant="5" id="nZZ-IN-YaK"/>
                             <constraint firstItem="Uu4-uf-CU5" firstAttribute="top" secondItem="kZj-Yo-BxM" secondAttribute="top" constant="10" id="x4t-RG-gjy"/>
                             <constraint firstItem="sD4-DC-Yiv" firstAttribute="leading" secondItem="kZj-Yo-BxM" secondAttribute="leading" constant="10" id="xOO-lj-qbs"/>
@@ -308,6 +307,7 @@
                     <connections>
                         <outlet property="chartView" destination="Uu4-uf-CU5" id="tpd-XQ-56r"/>
                         <outlet property="collectionView" destination="EfB-Eh-afj" id="36p-4V-4LQ"/>
+                        <outlet property="industryButton" destination="tum-jd-iUA" id="lAk-az-9Re"/>
                         <outlet property="marketLabel" destination="sD4-DC-Yiv" id="2nk-Dl-gC4"/>
                     </connections>
                 </viewController>
@@ -324,7 +324,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(version)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hmt-0C-S8n">
-                            <rect key="frame" x="0.0" y="568.83333206176758" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="580.83333206176758" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
@@ -362,7 +362,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="Ohm-A2-zNX">
+                            <tableViewSection footerTitle="(Only companies on US exchanges are displayed)" id="Ohm-A2-zNX">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="191" id="pib-xs-hdc">
                                         <rect key="frame" x="16" y="134.83333206176758" width="343" height="191"/>
@@ -371,9 +371,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="191"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="About Market Capitalization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTv-jK-9Mm">
-                                                    <rect key="frame" x="82" y="11" width="211" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is Market Capitalization?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTv-jK-9Mm">
+                                                    <rect key="frame" x="56.666666666666657" y="11" width="229.99999999999997" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -406,9 +405,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="g4u-b8-TBl" firstAttribute="top" secondItem="soX-Kj-KJc" secondAttribute="bottom" id="DAY-PE-Y7g"/>
+                                                <constraint firstItem="dTv-jK-9Mm" firstAttribute="centerX" secondItem="loN-Ky-g2Y" secondAttribute="centerX" id="GRI-Wp-bkM"/>
                                                 <constraint firstAttribute="trailing" secondItem="soX-Kj-KJc" secondAttribute="trailing" constant="15" id="X3L-EM-A6U"/>
                                                 <constraint firstItem="kUT-QB-dPf" firstAttribute="top" secondItem="loN-Ky-g2Y" secondAttribute="top" constant="13" id="XSA-ms-RtD"/>
                                                 <constraint firstItem="g4u-b8-TBl" firstAttribute="centerX" secondItem="loN-Ky-g2Y" secondAttribute="centerX" id="dg6-98-hLP"/>
+                                                <constraint firstItem="dTv-jK-9Mm" firstAttribute="top" secondItem="loN-Ky-g2Y" secondAttribute="topMargin" id="h53-la-qgA"/>
                                                 <constraint firstItem="soX-Kj-KJc" firstAttribute="leading" secondItem="loN-Ky-g2Y" secondAttribute="leading" constant="15" id="kYd-fc-spu"/>
                                                 <constraint firstItem="soX-Kj-KJc" firstAttribute="top" secondItem="kUT-QB-dPf" secondAttribute="bottom" constant="2" id="lgV-ir-Poo"/>
                                                 <constraint firstItem="kUT-QB-dPf" firstAttribute="leading" secondItem="loN-Ky-g2Y" secondAttribute="leading" constant="13" id="ud2-CB-Wfr"/>
@@ -420,7 +421,7 @@
                             <tableViewSection id="k8g-tW-dHr">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="vr6-sJ-Vit" detailTextLabel="Qqx-I4-Mor" imageView="sn4-fd-YkK" rowHeight="63" style="IBUITableViewCellStyleSubtitle" id="R6L-a5-6LW">
-                                        <rect key="frame" x="16" y="361.83333206176758" width="343" height="63"/>
+                                        <rect key="frame" x="16" y="373.83333206176758" width="343" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="R6L-a5-6LW" id="h8j-Rg-U0V">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="63"/>
@@ -451,7 +452,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="bI7-jc-B9u" detailTextLabel="W8b-HU-XQg" imageView="aJ2-U3-GgP" rowHeight="63" style="IBUITableViewCellStyleSubtitle" id="iJf-iK-NPN">
-                                        <rect key="frame" x="16" y="424.83333206176758" width="343" height="63"/>
+                                        <rect key="frame" x="16" y="436.83333206176758" width="343" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iJf-iK-NPN" id="90H-E9-PbL">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="63"/>
@@ -481,7 +482,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="feedbackCell" textLabel="7d1-pb-03Q" detailTextLabel="oe5-Vp-QNk" imageView="dye-lQ-gnC" rowHeight="63" style="IBUITableViewCellStyleSubtitle" id="1gN-bk-2dH">
-                                        <rect key="frame" x="16" y="487.83333206176758" width="343" height="63"/>
+                                        <rect key="frame" x="16" y="499.83333206176758" width="343" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1gN-bk-2dH" id="bO1-9q-kjT">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="63"/>
@@ -552,11 +553,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="dollarsign.square" catalog="system" width="128" height="114"/>
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="paperplane" catalog="system" width="128" height="118"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemGray4Color">
             <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

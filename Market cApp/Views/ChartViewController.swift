@@ -13,6 +13,7 @@ class ChartViewController: UIViewController {
     @IBOutlet weak var chartView: BarChart!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var marketLabel: UILabel!
+    @IBOutlet weak var industryButton: UIButton!
     
     private let timeUpdatedLabel: UILabel = {
         let label = UILabel()
@@ -34,14 +35,6 @@ class ChartViewController: UIViewController {
         return label
     }()
     
-    private let marketOpenLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.backgroundColor = .clear
-        label.textColor = .label
-        label.font = .systemFont(ofSize: 15, weight: .semibold)
-        return label
-    }()
     
     @objc private let refreshButton: UIButton = {
         let button = UIButton()
@@ -53,20 +46,23 @@ class ChartViewController: UIViewController {
     
     @objc private let tryAgainButton: UIButton = {
         let button = UIButton()
-        button.setTitle("TAP TO RETRY", for: .normal)
+        button.setTitle(" TAP TO RETRY ", for: .normal)
         button.layer.masksToBounds = true
         button.setTitleColor(.systemIndigo, for: .normal)
+        button.backgroundColor = .label
+        button.layer.cornerRadius = 3
         return button
     }()
     
     let indicator = UIActivityIndicatorView()
-    var buttons = [UIButton]()
+    var titleButtons = [UIButton]()
+    var barButtons = [UIButton]()
+    let barButtonsPadding: CGFloat = 3.5
     
     var allCompaniesFetched = false
-    var companiesCount = CompanyController.shared.companies.count
     var companiesFetchedCount = 0
     private let numberOfCompanies = 10
-   
+    
     var sortedTopCompanies: [Company] = []
     var selectedCompany: Company?
     private var highestMCValue: Double = 0
@@ -74,16 +70,23 @@ class ChartViewController: UIViewController {
     let barColor: UIColor = .systemIndigo
     let barWidth = 25
     let firstCompanyButtonLeadingConstraint: CGFloat = -32
-    let refreshButtonDelayTime: Double = 1.0
+    let refreshButtonDelayTime: Double = 2.0
+    let highlightedButtonTitleSize: CGFloat = 14.473
+    
+    var selectedIndustry = Industry.all
+    var IndustryActions = [UIAction]()
+    var IndustryMenu = UIMenu()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        layoutButtons()
+        layoutTitleButtons()
+        layoutBarButtons()
         layoutViews()
-                
+        setupIndustryMenu()
+        
         if !CompanyController.shared.sandBoxTesting {
-            fetchMCData()
+            fetchMCData(selectedIndustry: selectedIndustry)
         }
         
         let dataEntries = generateEmptyDataEntries()
@@ -94,7 +97,6 @@ class ChartViewController: UIViewController {
         
         view.addSubview(timeUpdatedLabel)
         view.addSubview(errorLabel)
-        view.addSubview(marketOpenLabel)
         view.addSubview(refreshButton)
         view.addSubview(tryAgainButton)
         view.addSubview(indicator)
@@ -112,7 +114,6 @@ class ChartViewController: UIViewController {
         tryAgainButton.addTarget(self, action: #selector(refeshData), for: .touchUpInside)
         
         marketLabel.text = ""
-        marketOpenLabel.isHidden = true
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -125,7 +126,6 @@ class ChartViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = UIColor.clear
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -157,7 +157,7 @@ class ChartViewController: UIViewController {
         setAppearance()
     }
     
-    func layoutButtons() {
+    func layoutTitleButtons() {
         
         let button0 = UIButton()
         let button1 = UIButton()
@@ -170,12 +170,12 @@ class ChartViewController: UIViewController {
         let button8 = UIButton()
         let button9 = UIButton()
         
-        buttons = [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9]
+        titleButtons = [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9]
         
         var index = 0
         let spacing: CGFloat = (view.width - CGFloat(barWidth)*10) / 11
         
-        for button in buttons {
+        for button in titleButtons {
             
             button.tag = index
             view.addSubview(button)
@@ -197,22 +197,149 @@ class ChartViewController: UIViewController {
         }
     }
     
-    func fetchMCData() {
+    func layoutBarButtons() {
+        
+        let button0 = UIButton()
+        let button1 = UIButton()
+        let button2 = UIButton()
+        let button3 = UIButton()
+        let button4 = UIButton()
+        let button5 = UIButton()
+        let button6 = UIButton()
+        let button7 = UIButton()
+        let button8 = UIButton()
+        let button9 = UIButton()
+        
+        barButtons = [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9]
         
         var index = 0
+        let spacing: CGFloat = (view.width - CGFloat(barWidth)*10) / 11
+        
+        for button in barButtons {
+            
+            button.tag = index
+            view.addSubview(button)
+            button.backgroundColor = .clear
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.leadingAnchor.constraint(equalTo: chartView.leadingAnchor, constant: CGFloat(index+1)*spacing + CGFloat(barWidth*index) - barButtonsPadding).isActive = true
+            button.topAnchor.constraint(equalTo: chartView.topAnchor, constant: 35).isActive = true
+            button.widthAnchor.constraint(equalToConstant: CGFloat(barWidth) + barButtonsPadding*2).isActive = true
+            button.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 0).isActive = true
+            button.addTarget(self, action: #selector(companyButtonTapped), for: .touchUpInside)
+            button.isHidden = false
+            
+            index += 1
+        }
+    }
+    
+    func setupIndustryMenu() {
+        
+        let action0 = UIAction(title: "All Industries", state: .on, handler: { _ in
+            self.selectedIndustry = .all
+            self.updateSelectedIndustry(selectedActionIndex: 0)
+            self.refeshData()
+        })
+        
+        let action1 = UIAction(title: "Automotive", image: UIImage(systemName: "car"), state: .off, handler: { _ in
+            self.selectedIndustry = .automotive
+            self.updateSelectedIndustry(selectedActionIndex: 1)
+            self.refeshData()
+        })
+        
+        let action2 = UIAction(title: "Banking", image: UIImage(systemName: "dollarsign.square"), state: .off, handler: { _ in
+            self.selectedIndustry = .banking
+            self.updateSelectedIndustry(selectedActionIndex: 2)
+            self.refeshData()
+        })
+        let action3 = UIAction(title: "Food and Beverage", image: UIImage(systemName: "cart"), state: .off, handler: { _ in
+            self.selectedIndustry = .foodAndBeverage
+            self.updateSelectedIndustry(selectedActionIndex: 3)
+            self.refeshData()
+        })
+        let action4 = UIAction(title: "Healthcare", image: UIImage(systemName: "cross.case"), state: .off, handler: { _ in
+            self.selectedIndustry = .healthcare
+            self.updateSelectedIndustry(selectedActionIndex: 4)
+            self.refeshData()
+        })
+        let action5 = UIAction(title: "Retail", image: UIImage(systemName: "tag"), state: .off, handler: { _ in
+            self.selectedIndustry = .retail
+            self.updateSelectedIndustry(selectedActionIndex: 5)
+            self.refeshData()
+        })
+        let action6 = UIAction(title: "Technology", image: UIImage(systemName: "desktopcomputer"), state: .off, handler: { _ in
+            self.selectedIndustry = .technology
+            self.updateSelectedIndustry(selectedActionIndex: 6)
+            self.refeshData()
+        })
+        
+        IndustryActions = [action0, action1, action2, action3, action4, action5, action6]
+        
+        IndustryMenu = UIMenu(title: "Filter by Industry", options: .displayInline, children: IndustryActions)
+        
+        if #available(iOS 14.0, *) {
+            industryButton.showsMenuAsPrimaryAction = true
+            industryButton.menu = IndustryMenu
+            
+        } else {
+            print("no iOS 14")
+        }
+    }
+    
+    func updateSelectedIndustry(selectedActionIndex: Int) {
+        
+        for action in IndustryActions {
+            action.state = .off
+        }
+        
+        IndustryActions[selectedActionIndex].state = .on
+        IndustryMenu = UIMenu(title: "Filter by Industry", options: .displayInline, children: IndustryActions)
+        
+        if #available(iOS 14.0, *) {
+            industryButton.menu = IndustryMenu
+        }
+        
+        
+        industryButton.setTitle("Industry: \(selectedIndustry.rawValue) ", for: .normal)
+        
+    }
+    
+    func fetchMCData(selectedIndustry: Industry) {
+        
+        var index = 0
+        
+        var companies: [Company]
+        
+        switch selectedIndustry {
+        
+        case .all:
+            companies = CompanyController.shared.allCompanies
+        case .banking:
+            companies = CompanyController.shared.bankingCompanies
+        case .foodAndBeverage:
+            companies = CompanyController.shared.foodAndBeveragesCompanies
+        case .healthcare:
+            companies = CompanyController.shared.healthcareCompanies
+        case .retail:
+            companies = CompanyController.shared.retailCompanies
+        case .technology:
+            companies = CompanyController.shared.technologyCompanies
+        case .automotive:
+            companies = CompanyController.shared.automotiveCompanies
+        }
+        
         companiesFetchedCount = 0
         
-        for company in CompanyController.shared.companies {
+        for company in companies {
             
-            CompanyController.shared.getMCData(company: company, index: index) { (result) in
+            CompanyController.shared.getMCData(company: company, index: index, selectedIndustry: selectedIndustry) { (result) in
                 DispatchQueue.main.async {
                     switch result {
                     
                     case .success(_):
                         self.companiesFetchedCount += 1
                         
-                        if self.companiesFetchedCount == self.companiesCount {
-                            print("ALL COMPANIES FETCHED")
+                        if self.companiesFetchedCount == companies.count {
+                            print("\nALL COMPANIES FETCHED")
                             self.allCompaniesFetched = true
                             self.updateChart()
                         } else {
@@ -230,7 +357,7 @@ class ChartViewController: UIViewController {
                             self.errorLabel.text = "It seems as if you are offline. Please check your connection and try again."
                             self.indicator.stopAnimating()
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + self.refreshButtonDelayTime) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 self.tryAgainButton.isHidden = false
                             }
                             
@@ -242,9 +369,12 @@ class ChartViewController: UIViewController {
                             self.errorLabel.isHidden = false
                             self.indicator.stopAnimating()
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + self.refreshButtonDelayTime) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 self.tryAgainButton.isHidden = false
                             }
+                            
+                            self.marketLabel.isHidden = true
+                            self.timeUpdatedLabel.isHidden = true
                         }
                     /* Error types
                      "A server with the specified hostname could not be found." - bad url
@@ -275,12 +405,18 @@ class ChartViewController: UIViewController {
     func updateButtons(sortedTopCompanies: [Company]) {
         var index = 0
         
-        for button in buttons {
+        for button in titleButtons {
             
             let companyName = sortedTopCompanies[index].name
             button.setTitle("\(companyName)", for: .normal)
+            button.titleLabel?.font = UIFont(name: "Cochin", size: 15)
+            button.widthAnchor.constraint(equalToConstant: 100).isActive = true
             button.isHidden = false
             index += 1
+        }
+        
+        for button in barButtons {
+            button.isHidden = false
         }
     }
     
@@ -293,7 +429,26 @@ class ChartViewController: UIViewController {
     }
     
     func updateChart(){
-        let companies = CompanyController.shared.companies
+        
+        let companies: [Company]
+        
+        switch selectedIndustry {
+        
+        case .all:
+            companies = CompanyController.shared.allCompanies
+        case .banking:
+            companies = CompanyController.shared.bankingCompanies
+        case .foodAndBeverage:
+            companies = CompanyController.shared.foodAndBeveragesCompanies
+        case .healthcare:
+            companies = CompanyController.shared.healthcareCompanies
+        case .retail:
+            companies = CompanyController.shared.retailCompanies
+        case .technology:
+            companies = CompanyController.shared.technologyCompanies
+        case .automotive:
+            companies = CompanyController.shared.automotiveCompanies
+        }
         
         errorLabel.isHidden = true
         tryAgainButton.isHidden = true
@@ -301,25 +456,36 @@ class ChartViewController: UIViewController {
         if allCompaniesFetched {
             
             var sortedCompanies = companies.sorted(by: {$0.marketCap > $1.marketCap})
+            print("ALL sorted companies for \(selectedIndustry.rawValue): \(sortedCompanies)")
+            
             let sortedTopCompanies: [Company]
             
             /// Berkshire Hathaway has two different stocks. Depending on the time, one may return a null value or they both may appear so this makes sure only one will be displayed on the charts and not two.
-            let berkA = sortedCompanies.first(where: { $0.ticker == "brk.a"})
-            let berkB = sortedCompanies.first(where: { $0.ticker == "brk.b"})
             
-            if berkA!.marketCap != 0 && berkB!.marketCap != 0 {
+            if selectedIndustry == .all {
                 
-                sortedCompanies.removeAll(where:  { $0.ticker == "brk.b" })
-                sortedTopCompanies = Array(sortedCompanies.prefix(10))
-                self.sortedTopCompanies = sortedTopCompanies
+                let berkA = sortedCompanies.first(where: { $0.ticker == "brk.a"})
+                let berkB = sortedCompanies.first(where: { $0.ticker == "brk.b"})
+                
+                if berkA!.marketCap != 0 && berkB!.marketCap != 0 {
+                    print("both berks have mc is TRUE! removing one")
+                    
+                    sortedCompanies.removeAll(where:  { $0.ticker == "brk.b" })
+                    sortedTopCompanies = Array(sortedCompanies.prefix(10))
+                    self.sortedTopCompanies = sortedTopCompanies
+                    
+                } else {
+                    print("\n\nboth berks have mc is FALSE!\n\n")
+                    sortedTopCompanies = Array(sortedCompanies.prefix(10))
+                    self.sortedTopCompanies = sortedTopCompanies
+                }
                 
             } else {
-                print("\n\nboth berks have mc is FALSE!\n\n")
                 sortedTopCompanies = Array(sortedCompanies.prefix(10))
                 self.sortedTopCompanies = sortedTopCompanies
             }
             
-            print("sort TOP: \(sortedTopCompanies)")
+            print("sort TOP for \(selectedIndustry): \(sortedTopCompanies)")
             chartView.updateDataEntries(dataEntries: generateFetchedDataEntries(sortedTopCompanies: sortedTopCompanies), animated: true)
             
             indicator.stopAnimating()
@@ -327,6 +493,7 @@ class ChartViewController: UIViewController {
             
             let formattedDate = CompanyController.shared.formattedUpdatedDate(date: Date())
             timeUpdatedLabel.text = "Updated: \(formattedDate)"
+            timeUpdatedLabel.isHidden = false
             
             let marketStatus: String
             
@@ -336,6 +503,7 @@ class ChartViewController: UIViewController {
                 marketStatus = "closed"
             }
             marketLabel.text = "Market \(marketStatus)"
+            marketLabel.isHidden = false
             
             incrementRefreshCountForRatingPrompt()
             
@@ -350,6 +518,12 @@ class ChartViewController: UIViewController {
     
     func highlightBar(barIndex: Int) {
         chartView.updateDataEntries(dataEntries: generateSelectedDataEntried(sortedTopCompanies: sortedTopCompanies, index: barIndex), animated: true)
+        
+        for button in titleButtons {
+            button.titleLabel?.font = UIFont(name: "Cochin", size: 15)
+        }
+
+        titleButtons[barIndex].titleLabel?.font = UIFont(name: "Cochin-bold", size: highlightedButtonTitleSize)
         collectionView.reloadData()
     }
     
@@ -409,12 +583,16 @@ class ChartViewController: UIViewController {
         tryAgainButton.isHidden = true
         indicator.startAnimating()
         
-        for button in buttons {
+        for button in titleButtons {
+            button.isHidden = true
+        }
+        
+        for button in barButtons {
             button.isHidden = true
         }
         
         allCompaniesFetched = false
-        companiesCount = CompanyController.shared.companies.count
+        
         companiesFetchedCount = 0
         sortedTopCompanies = []
         selectedCompany = nil
@@ -423,7 +601,7 @@ class ChartViewController: UIViewController {
         let dataEntries = generateEmptyDataEntries()
         chartView.updateDataEntries(dataEntries: dataEntries, animated: false)
         
-        fetchMCData()
+        fetchMCData(selectedIndustry: selectedIndustry)
         
         refreshButton.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + refreshButtonDelayTime) {

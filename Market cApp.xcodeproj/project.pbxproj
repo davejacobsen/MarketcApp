@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D53F6D242521B09100626CD1 /* CompanyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F6D232521B09100626CD1 /* CompanyError.swift */; };
+		D556E11C253E6A8E0066898B /* Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D556E11B253E6A8E0066898B /* Industry.swift */; };
 		D57B300E252171D90023D7D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B300D252171D90023D7D5 /* AppDelegate.swift */; };
 		D57B3010252171D90023D7D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B300F252171D90023D7D5 /* SceneDelegate.swift */; };
 		D57B3015252171D90023D7D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57B3013252171D90023D7D5 /* Main.storyboard */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		D53F6D232521B09100626CD1 /* CompanyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyError.swift; sourceTree = "<group>"; };
+		D556E11B253E6A8E0066898B /* Industry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Industry.swift; sourceTree = "<group>"; };
 		D57B300A252171D90023D7D5 /* Market cApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Market cApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D57B300D252171D90023D7D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D57B300F252171D90023D7D5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				D5D44A4E2525A1900030A933 /* CustomSegment.swift */,
 				D5D44A5E2525A21F0030A933 /* BarChart.swift */,
 				D5D44A662525A2530030A933 /* BarEntry.swift */,
+				D556E11B253E6A8E0066898B /* Industry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				D5D44A672525A2530030A933 /* BarEntry.swift in Sources */,
 				D5EA75762526F08600493960 /* DoubleExtension.swift in Sources */,
 				D5D44A4B2525A16F0030A933 /* DataEntry.swift in Sources */,
+				D556E11C253E6A8E0066898B /* Industry.swift in Sources */,
 				D5EA7594252ABA8000493960 /* MenuTableViewController.swift in Sources */,
 				D57B300E252171D90023D7D5 /* AppDelegate.swift in Sources */,
 				D5EA7598252ABD5E00493960 /* UIApplicationExtension.swift in Sources */,
@@ -570,12 +574,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9U46PJ4YSS;
 				INFOPLIST_FILE = "Market cApp/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ddjacobsen17.Market-cApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -591,12 +595,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9U46PJ4YSS;
 				INFOPLIST_FILE = "Market cApp/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ddjacobsen17.Market-cApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
