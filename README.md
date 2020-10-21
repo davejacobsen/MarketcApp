@@ -6,7 +6,7 @@ Open source code for an app on the App Store called Market cApp. The app display
 
 -See the most up to date market cap data
 
--Visualize how top companies compare to each other
+-Visualize how top companies compare to each other and filter by industry
 
 -View additional stock data such as price, volume, and 52 week highs and lows
 
@@ -27,11 +27,13 @@ Open source code for an app on the App Store called Market cApp. The app display
 
 ***Features in the works***
 
--Filter by date
+-Adding curved bar support. User will be able to toggle between curved or rectangular appearance.
 
--Filter by industry
+-Caching data to reduce load on API and improve responsiveness.
 
--Saving favorites outside of the current top 10
+-About the app page with link to github repo.
+
+-Company profile for viewing, address, employee count, company overview and more.
 
 **Feel free to contribute!**
 
