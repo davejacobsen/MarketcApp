@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Used to initialize the company lists before the API call
 struct Company: Codable {
     
     let ticker: String
@@ -22,14 +23,26 @@ struct Company: Codable {
 }
 
 /// For decoding
-
 struct CompanyInfo: Codable {
     let marketCap: Double?
     let latestPrice: Double
     let volume: Double?
-    let previousVolume: Double
+    let previousVolume: Double?
     let primaryExchange: String
     let week52High: Double?
     let week52Low: Double?
     let isUSMarketOpen: Bool
+}
+
+
+/// Non optional properties are because the API returns an empty string if there is no value instead of null
+struct CompanyProfile: Codable {
+    let companyName: String
+    let employees: Double?
+    let CEO: String
+    let website: String
+    let city: String?
+    let state: String?
+    let country: String?
+    let description: String
 }

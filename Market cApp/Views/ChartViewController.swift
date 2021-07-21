@@ -64,7 +64,6 @@ class ChartViewController: UIViewController {
     private let numberOfCompanies = 10
     
     var sortedTopCompanies: [Company] = []
-    var selectedCompany: Company?
     private var highestMCValue: Double = 0
     let companyButtonRotationAngle: CGFloat = -2.45
     let barColor: UIColor = .systemIndigo
@@ -85,6 +84,7 @@ class ChartViewController: UIViewController {
         layoutViews()
         setupIndustryMenu()
         
+        /// Prevents API call if testing areas that don't need the API data
         if !CompanyController.shared.sandBoxTesting {
             fetchMCData(selectedIndustry: selectedIndustry)
         }
@@ -108,10 +108,10 @@ class ChartViewController: UIViewController {
         indicator.hidesWhenStopped = true
         indicator.startAnimating()
         
-        refreshButton.addTarget(self, action: #selector(refeshData), for: .touchUpInside)
+        refreshButton.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
         refreshButton.isHidden = true
         
-        tryAgainButton.addTarget(self, action: #selector(refeshData), for: .touchUpInside)
+        tryAgainButton.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
         
         marketLabel.text = ""
         
@@ -126,6 +126,7 @@ class ChartViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = UIColor.clear
+    
     }
     
     override func viewWillLayoutSubviews() {
@@ -237,39 +238,39 @@ class ChartViewController: UIViewController {
         let action0 = UIAction(title: "All Industries", state: .on, handler: { _ in
             self.selectedIndustry = .all
             self.updateSelectedIndustry(selectedActionIndex: 0)
-            self.refeshData()
+            self.refreshData()
         })
         
         let action1 = UIAction(title: "Automotive", image: UIImage(systemName: "car"), state: .off, handler: { _ in
             self.selectedIndustry = .automotive
             self.updateSelectedIndustry(selectedActionIndex: 1)
-            self.refeshData()
+            self.refreshData()
         })
         
         let action2 = UIAction(title: "Banking", image: UIImage(systemName: "dollarsign.square"), state: .off, handler: { _ in
             self.selectedIndustry = .banking
             self.updateSelectedIndustry(selectedActionIndex: 2)
-            self.refeshData()
+            self.refreshData()
         })
         let action3 = UIAction(title: "Food and Beverage", image: UIImage(systemName: "cart"), state: .off, handler: { _ in
             self.selectedIndustry = .foodAndBeverage
             self.updateSelectedIndustry(selectedActionIndex: 3)
-            self.refeshData()
+            self.refreshData()
         })
         let action4 = UIAction(title: "Healthcare", image: UIImage(systemName: "cross.case"), state: .off, handler: { _ in
             self.selectedIndustry = .healthcare
             self.updateSelectedIndustry(selectedActionIndex: 4)
-            self.refeshData()
+            self.refreshData()
         })
         let action5 = UIAction(title: "Retail", image: UIImage(systemName: "tag"), state: .off, handler: { _ in
             self.selectedIndustry = .retail
             self.updateSelectedIndustry(selectedActionIndex: 5)
-            self.refeshData()
+            self.refreshData()
         })
         let action6 = UIAction(title: "Technology", image: UIImage(systemName: "desktopcomputer"), state: .off, handler: { _ in
             self.selectedIndustry = .technology
             self.updateSelectedIndustry(selectedActionIndex: 6)
-            self.refeshData()
+            self.refreshData()
         })
         
         IndustryActions = [action0, action1, action2, action3, action4, action5, action6]
@@ -287,6 +288,7 @@ class ChartViewController: UIViewController {
     
     func updateSelectedIndustry(selectedActionIndex: Int) {
         
+        /// Unchecks previously selected industry
         for action in IndustryActions {
             action.state = .off
         }
@@ -298,7 +300,6 @@ class ChartViewController: UIViewController {
             industryButton.menu = IndustryMenu
         }
         
-        
         industryButton.setTitle("Industry: \(selectedIndustry.rawValue) ", for: .normal)
         
     }
@@ -306,7 +307,7 @@ class ChartViewController: UIViewController {
     func fetchMCData(selectedIndustry: Industry) {
         
         var index = 0
-        
+        companiesFetchedCount = 0
         var companies: [Company]
         
         switch selectedIndustry {
@@ -327,11 +328,13 @@ class ChartViewController: UIViewController {
             companies = CompanyController.shared.automotiveCompanies
         }
         
-        companiesFetchedCount = 0
-        
         for company in companies {
             
-            CompanyController.shared.getMCData(company: company, index: index, selectedIndustry: selectedIndustry) { (result) in
+            /// Passing in [weak self] prevents a retain cycle
+            CompanyController.shared.getMCData(company: company, index: index, selectedIndustry: selectedIndustry) { [weak self] (result) in
+                
+                guard let self = self else { return }
+                
                 DispatchQueue.main.async {
                     switch result {
                     
@@ -342,8 +345,6 @@ class ChartViewController: UIViewController {
                             print("\nALL COMPANIES FETCHED")
                             self.allCompaniesFetched = true
                             self.updateChart()
-                        } else {
-                            print("companies fetched(called from success) \(self.companiesFetchedCount)")
                         }
                         
                     case .failure(let error):
@@ -381,7 +382,6 @@ class ChartViewController: UIViewController {
                      "The request timed out." - took too long
                      "The data couldn’t be read because it isn’t in the correct format."  - when speed limits are hit.
                      */
-                    
                     }
                 }
             }
@@ -460,22 +460,18 @@ class ChartViewController: UIViewController {
             
             let sortedTopCompanies: [Company]
             
-            /// Berkshire Hathaway has two different stocks. Depending on the time, one may return a null value or they both may appear so this makes sure only one will be displayed on the charts and not two.
-            
             if selectedIndustry == .all {
-                
+                /// Berkshire Hathaway has two different stocks. Depending on the time, one may return a null value or they both may appear so this makes sure only one will be displayed on the charts and not two.
                 let berkA = sortedCompanies.first(where: { $0.ticker == "brk.a"})
                 let berkB = sortedCompanies.first(where: { $0.ticker == "brk.b"})
                 
                 if berkA!.marketCap != 0 && berkB!.marketCap != 0 {
-                    print("both berks have mc is TRUE! removing one")
                     
                     sortedCompanies.removeAll(where:  { $0.ticker == "brk.b" })
                     sortedTopCompanies = Array(sortedCompanies.prefix(10))
                     self.sortedTopCompanies = sortedTopCompanies
                     
                 } else {
-                    print("\n\nboth berks have mc is FALSE!\n\n")
                     sortedTopCompanies = Array(sortedCompanies.prefix(10))
                     self.sortedTopCompanies = sortedTopCompanies
                 }
@@ -485,7 +481,7 @@ class ChartViewController: UIViewController {
                 self.sortedTopCompanies = sortedTopCompanies
             }
             
-            print("sort TOP for \(selectedIndustry): \(sortedTopCompanies)")
+            //print("sorted top companies for \(selectedIndustry): \(sortedTopCompanies)")
             chartView.updateDataEntries(dataEntries: generateFetchedDataEntries(sortedTopCompanies: sortedTopCompanies), animated: true)
             
             indicator.stopAnimating()
@@ -522,7 +518,7 @@ class ChartViewController: UIViewController {
         for button in titleButtons {
             button.titleLabel?.font = UIFont(name: "Cochin", size: 15)
         }
-
+        
         titleButtons[barIndex].titleLabel?.font = UIFont(name: "Cochin-bold", size: highlightedButtonTitleSize)
         collectionView.reloadData()
     }
@@ -569,12 +565,13 @@ class ChartViewController: UIViewController {
     }
     
     @objc func companyButtonTapped(sender: UIButton) {
-        selectedCompany = sortedTopCompanies[sender.tag]
-        selectedCompany?.mcRank = sender.tag + 1
+        guard sortedTopCompanies.count != 0 else { return }
+        CompanyController.shared.selectedCompany = sortedTopCompanies[sender.tag]
+        CompanyController.shared.selectedCompany?.mcRank = sender.tag + 1
         highlightBar(barIndex: sender.tag)
     }
     
-    @objc func refeshData() {
+    @objc func refreshData() {
         
         let generator = UIImpactFeedbackGenerator(style: .rigid)
         generator.impactOccurred()
@@ -595,7 +592,7 @@ class ChartViewController: UIViewController {
         
         companiesFetchedCount = 0
         sortedTopCompanies = []
-        selectedCompany = nil
+        CompanyController.shared.selectedCompany = nil
         clearCompanyDetails()
         
         let dataEntries = generateEmptyDataEntries()
@@ -626,7 +623,7 @@ class ChartViewController: UIViewController {
                 SKStoreReviewController.requestReview()
             }
             
-            /// this prevents the rating menu cell from requesting an in app rating and failing and will trigger the user to be launched to the app store if they tap the rating cell
+            /// This prevents the rating menu cell from requesting an in app rating and failing and will trigger the user to be launched to the app store if they tap the rating cell
             defaults.setValue(true, forKey: "hasPresentedStoreKitRatePrompt")
         }
         refreshCount += 1
@@ -634,7 +631,7 @@ class ChartViewController: UIViewController {
     }
     
     func clearCompanyDetails() {
-        selectedCompany = nil
+        CompanyController.shared.selectedCompany = nil
         collectionView.reloadData()
     }  
 }
@@ -648,7 +645,7 @@ extension ChartViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "companyDetailCell", for: indexPath) as! CompanyDetailCollectionViewCell
-        if let selectedCompany = selectedCompany {
+        if let selectedCompany = CompanyController.shared.selectedCompany {
             cell.configure(company: selectedCompany)
         } else {
             cell.layoutEmpty()

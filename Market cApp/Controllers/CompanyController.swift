@@ -11,8 +11,10 @@ class CompanyController {
     
     static let shared = CompanyController()
     
-    ///Variable to prevent overuse of API calls. Used for testing UI where live data isn't needed.
+    /// Variable to prevent overuse of API calls. Used for testing UI where live data isn't needed.
     var sandBoxTesting = false
+    
+    var selectedCompany: Company? = nil
     
     var allCompanies = [
         Company(ticker: "aapl", name: "Apple"),
@@ -37,19 +39,6 @@ class CompanyController {
         Company(ticker: "vz", name: "Verizon"),
         Company(ticker: "crm", name: "SalesForce"),
         Company(ticker: "adbe", name: "Adobe"),
-        //        Company(ticker: "pypl", name: "PayPal"),
-        //        Company(ticker: "nflx", name: "Netflix"),
-        //        Company(ticker: "dis", name: "Disney"),
-        //        Company(ticker: "intc", name: "Intel"),
-        
-        /// 27 call is the API limit with current fucnction. Will need to add throttling to make more calls
-        
-        //                Company(ticker: "cmcsa", name: "Comcast"),
-        //                Company(ticker: "bac", name: "Bank of America"),
-        //                Company(ticker: "ko", name: "Coca-Cola"),
-        //                Company(ticker: "mrk", name: "Merck"),
-        //                Company(ticker: "pfe", name: "Pfizer"),
-        //                Company(ticker: "t", name: "AT&T"),
     ]
     
     var bankingCompanies = [
@@ -207,7 +196,6 @@ class CompanyController {
                 let week52Low = topLevel.week52Low
                 let isUSMarketOpen = topLevel.isUSMarketOpen
                 
-                ///CLEAN UP
                 switch selectedIndustry {
                 
                 case .all:
@@ -216,7 +204,7 @@ class CompanyController {
                     }
                     if let volume = volume {
                         self.allCompanies[index].volume = volume
-                    } else {
+                    } else if let previousVolume = previousVolume {
                         self.allCompanies[index].volume = previousVolume
                     }
                     if let week52High = week52High {
@@ -236,7 +224,7 @@ class CompanyController {
                     }
                     if let volume = volume {
                         self.bankingCompanies[index].volume = volume
-                    } else {
+                    } else if let previousVolume = previousVolume {
                         self.bankingCompanies[index].volume = previousVolume
                     }
                     if let week52High = week52High {
@@ -256,7 +244,7 @@ class CompanyController {
                     }
                     if let volume = volume {
                         self.foodAndBeveragesCompanies[index].volume = volume
-                    } else {
+                    } else if let previousVolume = previousVolume {
                         self.foodAndBeveragesCompanies[index].volume = previousVolume
                     }
                     if let week52High = week52High {
@@ -276,7 +264,7 @@ class CompanyController {
                     }
                     if let volume = volume {
                         self.healthcareCompanies[index].volume = volume
-                    } else {
+                    } else if let previousVolume = previousVolume {
                         self.healthcareCompanies[index].volume = previousVolume
                     }
                     if let week52High = week52High {
@@ -296,7 +284,7 @@ class CompanyController {
                     }
                     if let volume = volume {
                         self.retailCompanies[index].volume = volume
-                    } else {
+                    } else if let previousVolume = previousVolume {
                         self.retailCompanies[index].volume = previousVolume
                     }
                     if let week52High = week52High {
@@ -316,7 +304,7 @@ class CompanyController {
                     }
                     if let volume = volume {
                         self.technologyCompanies[index].volume = volume
-                    } else {
+                    } else if let previousVolume = previousVolume {
                         self.technologyCompanies[index].volume = previousVolume
                     }
                     if let week52High = week52High {
@@ -336,7 +324,7 @@ class CompanyController {
                     }
                     if let volume = volume {
                         self.automotiveCompanies[index].volume = volume
-                    } else {
+                    } else if let previousVolume = previousVolume {
                         self.automotiveCompanies[index].volume = previousVolume
                     }
                     if let week52High = week52High {
@@ -360,6 +348,38 @@ class CompanyController {
         }.resume()
     }
     
+    /// This gets run when the CompanyProfileTableViewController is loaded
+    func getProfileData(ticker: String, completion: @escaping (Result<CompanyProfile, CompanyError>) -> Void) {
+        
+        var finalURLOptional: URL?
+        
+        finalURLOptional = URL(string: "https://cloud.iexapis.com/stable/stock/\(ticker)/company?token=pk_8f08b1e6bbf44a30828706f000ebc337")
+        
+        guard let finalURL = finalURLOptional else { return completion(.failure(.invalidURL)) }
+        
+        print("finalURL: \(finalURL)")
+        
+        URLSession.shared.dataTask(with: finalURL) { (data, _, error) in
+            
+            if let error = error {
+                print("ERROR\n")
+                return completion(.failure(.thrown(error))) }
+            
+            guard let data = data else { return completion(.failure(.noData)) }
+            
+            do {
+                let topLevel = try JSONDecoder().decode(CompanyProfile.self, from: data)
+                
+                return completion(.success(topLevel))
+                
+            } catch {
+                print("\(error.localizedDescription)n")
+                return completion(.failure(.thrown(error)))
+            }
+        }.resume()
+    }
+    
+    /// Formats the market cap to fit on the chart
     func condenseMC(mc: Double) -> String {
         switch mc {
         case 1_000_000_000_000...:
@@ -396,11 +416,17 @@ class CompanyController {
         return formattedNumber
     }
     
+    /// Called when the updated date label is set
     func formattedUpdatedDate(date: Date) -> String {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, h:mm a"
         
         return formatter.string(from: date)
+    }
+    
+    /// This saves space on the website button's width
+    func formattedWebsite(websiteString: String) -> String {
+        return websiteString.starts(with: "http://www.") ? String(websiteString.dropFirst(7)) : websiteString
     }
 }

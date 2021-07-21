@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Used to display the ap version in the menu and gets attached to feedback emails
+/// Used to display the app version in the menu and gets attached to feedback emails
 
 extension UIApplication {
     static var appVersion: String? {

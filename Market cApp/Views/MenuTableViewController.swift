@@ -8,11 +8,17 @@
 import UIKit
 import MessageUI
 import StoreKit
+import SafariServices
 
-class MenuTableViewController: UITableViewController {
+class MenuTableViewController: UITableViewController, SFSafariViewControllerDelegate {
     
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var appearanceSegmentedControl: UISegmentedControl!
+    
+    /// a small screen device here is an iPhone 8 or smaller in height
+    var deviceHasSmallScreen: Bool {
+        view.frame.size.height <= 667
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,9 +28,12 @@ class MenuTableViewController: UITableViewController {
         if let appVersion = UIApplication.appVersion {
             versionLabel.text = "Market cApp version \(appVersion)"
         }
+        
+        tableView.isScrollEnabled = deviceHasSmallScreen
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         setAppearance()
     }
     
@@ -64,19 +73,29 @@ class MenuTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 {
-            return 3
-        } else {
-            return 1
+        
+        switch section {
+        case 0: return 2
+        case 1: return 1
+        case 2: return 3
+        case 3: return 1
+        default: return 0
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+        
+            switch section {
+            case 0: return 15
+            case 1: return 10
+            case 2: return 15
+            case 3: return 6
+            default: return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -88,7 +107,7 @@ class MenuTableViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
         case [2, 2]: composeShareEmail()
             tableView.deselectRow(at: indexPath, animated: true)
-        default: print("no action")
+        default: print("no class function triggered for index path: \(indexPath)")
         }
     }
     
@@ -133,6 +152,17 @@ class MenuTableViewController: UITableViewController {
             self.present(activityVC, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func twitterHandleTapped(_ sender: Any) {
+        let urlString = "https://twitter.com/davejacobseniOS"
+        
+        if let url = URL(string: urlString) {
+            let vc = SFSafariViewController(url: url)
+            vc.delegate = self
+            
+            present(vc, animated: true)
+        }
+    }
 }
 
 extension MenuTableViewController: MFMailComposeViewControllerDelegate {
@@ -149,10 +179,16 @@ extension MenuTableViewController: MFMailComposeViewControllerDelegate {
     func configuredMailComposeViewController() -> MFMailComposeViewController {
         
         let messageBody: String
+        let deviceModelName = UIDevice.modelName
+        let iOSVersion = UIDevice.current.systemVersion
+        let topDivider = "------- Developer Info -------"
+        let divider = "------------------------------"
+        
         if let appVersion = UIApplication.appVersion {
-            messageBody = "\n\n\n\nApp version: \(appVersion)"
+            
+            messageBody =  "\n\n\n\n\(topDivider)\nApp version: \(appVersion)\nDevice model: \(deviceModelName)\niOS version: \(iOSVersion)\n\(divider)"
         } else {
-            messageBody = "\n\n"
+            messageBody = "\n\n\n\n\(topDivider)\nDevice model: \(deviceModelName)\niOS version: \(iOSVersion)\n\(divider)"
         }
         
         let mailComposerVC = MFMailComposeViewController()

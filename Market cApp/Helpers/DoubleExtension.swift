@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Used for condenseMC function on CompanyController
 extension Double {
     func reduceScale(to places: Int) -> Double {
         let multiplier = pow(10, Double(places))

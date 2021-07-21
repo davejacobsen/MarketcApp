@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D507AC9F25A137FD0064861D /* IconTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507AC9E25A137FD0064861D /* IconTableViewController.swift */; };
+		D507ACA325A1386B0064861D /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507ACA225A1386B0064861D /* Icon.swift */; };
+		D507ACAB25A166210064861D /* altIcon3.png in Resources */ = {isa = PBXBuildFile; fileRef = D507ACA725A166200064861D /* altIcon3.png */; };
+		D507ACAC25A166210064861D /* altIcon1.png in Resources */ = {isa = PBXBuildFile; fileRef = D507ACA825A166210064861D /* altIcon1.png */; };
+		D507ACAD25A166210064861D /* altIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = D507ACA925A166210064861D /* altIcon2.png */; };
+		D507ACAE25A166210064861D /* altIcon4.png in Resources */ = {isa = PBXBuildFile; fileRef = D507ACAA25A166210064861D /* altIcon4.png */; };
 		D53F6D242521B09100626CD1 /* CompanyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F6D232521B09100626CD1 /* CompanyError.swift */; };
 		D556E11C253E6A8E0066898B /* Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D556E11B253E6A8E0066898B /* Industry.swift */; };
+		D556F51825B249DD003DC2FC /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D556F51725B249DD003DC2FC /* UIDeviceExtension.swift */; };
 		D57B300E252171D90023D7D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B300D252171D90023D7D5 /* AppDelegate.swift */; };
 		D57B3010252171D90023D7D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B300F252171D90023D7D5 /* SceneDelegate.swift */; };
 		D57B3015252171D90023D7D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57B3013252171D90023D7D5 /* Main.storyboard */; };
@@ -28,6 +35,9 @@
 		D5D44A5F2525A21F0030A933 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D44A5E2525A21F0030A933 /* BarChart.swift */; };
 		D5D44A632525A23D0030A933 /* BarChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D44A622525A23D0030A933 /* BarChartController.swift */; };
 		D5D44A672525A2530030A933 /* BarEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D44A662525A2530030A933 /* BarEntry.swift */; };
+		D5E70190254CCE5B003D6A02 /* CompanyProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E7018F254CCE5B003D6A02 /* CompanyProfileTableViewController.swift */; };
+		D5E70196254CD0E6003D6A02 /* CompanyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E70195254CD0E6003D6A02 /* CompanyInfoTableViewCell.swift */; };
+		D5E7019C254CD1BE003D6A02 /* CompanySummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E7019B254CD1BE003D6A02 /* CompanySummaryTableViewCell.swift */; };
 		D5EA75762526F08600493960 /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EA75752526F08600493960 /* DoubleExtension.swift */; };
 		D5EA757B2526F89A00493960 /* CompanyDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EA757A2526F89A00493960 /* CompanyDetailCollectionViewCell.swift */; };
 		D5EA7594252ABA8000493960 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EA7593252ABA8000493960 /* MenuTableViewController.swift */; };
@@ -65,8 +75,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D507AC9E25A137FD0064861D /* IconTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTableViewController.swift; sourceTree = "<group>"; };
+		D507ACA225A1386B0064861D /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		D507ACA725A166200064861D /* altIcon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altIcon3.png; sourceTree = "<group>"; };
+		D507ACA825A166210064861D /* altIcon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altIcon1.png; sourceTree = "<group>"; };
+		D507ACA925A166210064861D /* altIcon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altIcon2.png; sourceTree = "<group>"; };
+		D507ACAA25A166210064861D /* altIcon4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = altIcon4.png; sourceTree = "<group>"; };
 		D53F6D232521B09100626CD1 /* CompanyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyError.swift; sourceTree = "<group>"; };
 		D556E11B253E6A8E0066898B /* Industry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Industry.swift; sourceTree = "<group>"; };
+		D556F51725B249DD003DC2FC /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		D57B300A252171D90023D7D5 /* Market cApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Market cApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D57B300D252171D90023D7D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D57B300F252171D90023D7D5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +109,9 @@
 		D5D44A5E2525A21F0030A933 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		D5D44A622525A23D0030A933 /* BarChartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartController.swift; sourceTree = "<group>"; };
 		D5D44A662525A2530030A933 /* BarEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarEntry.swift; sourceTree = "<group>"; };
+		D5E7018F254CCE5B003D6A02 /* CompanyProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileTableViewController.swift; sourceTree = "<group>"; };
+		D5E70195254CD0E6003D6A02 /* CompanyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyInfoTableViewCell.swift; sourceTree = "<group>"; };
+		D5E7019B254CD1BE003D6A02 /* CompanySummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanySummaryTableViewCell.swift; sourceTree = "<group>"; };
 		D5EA75752526F08600493960 /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
 		D5EA757A2526F89A00493960 /* CompanyDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D5EA7593252ABA8000493960 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
@@ -123,9 +143,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D507ACA625A1660C0064861D /* Alt Icons */ = {
+			isa = PBXGroup;
+			children = (
+				D507ACA825A166210064861D /* altIcon1.png */,
+				D507ACA925A166210064861D /* altIcon2.png */,
+				D507ACA725A166200064861D /* altIcon3.png */,
+				D507ACAA25A166210064861D /* altIcon4.png */,
+			);
+			path = "Alt Icons";
+			sourceTree = "<group>";
+		};
 		D53F6D222521B07C00626CD1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D507ACA625A1660C0064861D /* Alt Icons */,
 				D53F6D232521B09100626CD1 /* CompanyError.swift */,
 				D5D44A40252553580030A933 /* ViewExtension.swift */,
 				D5D44A522525A1C50030A933 /* UIBezierPathExtension.swift */,
@@ -133,6 +165,8 @@
 				D5D44A5A2525A2040030A933 /* ArrayExtension.swift */,
 				D5EA75752526F08600493960 /* DoubleExtension.swift */,
 				D5EA7597252ABD5E00493960 /* UIApplicationExtension.swift */,
+				D507ACA225A1386B0064861D /* Icon.swift */,
+				D556F51725B249DD003DC2FC /* UIDeviceExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -193,7 +227,9 @@
 			children = (
 				D57B3013252171D90023D7D5 /* Main.storyboard */,
 				D5D44A3A25254CA40030A933 /* ChartViewController.swift */,
+				D5E7018F254CCE5B003D6A02 /* CompanyProfileTableViewController.swift */,
 				D5EA7593252ABA8000493960 /* MenuTableViewController.swift */,
+				D507AC9E25A137FD0064861D /* IconTableViewController.swift */,
 				D5EA75792526F86B00493960 /* Custom Cells */,
 			);
 			path = Views;
@@ -237,6 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				D5EA757A2526F89A00493960 /* CompanyDetailCollectionViewCell.swift */,
+				D5E70195254CD0E6003D6A02 /* CompanyInfoTableViewCell.swift */,
+				D5E7019B254CD1BE003D6A02 /* CompanySummaryTableViewCell.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -349,7 +387,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D507ACAB25A166210064861D /* altIcon3.png in Resources */,
+				D507ACAC25A166210064861D /* altIcon1.png in Resources */,
 				D57B301A252171DB0023D7D5 /* LaunchScreen.storyboard in Resources */,
+				D507ACAE25A166210064861D /* altIcon4.png in Resources */,
+				D507ACAD25A166210064861D /* altIcon2.png in Resources */,
 				D57B3017252171DB0023D7D5 /* Assets.xcassets in Resources */,
 				D57B3015252171D90023D7D5 /* Main.storyboard in Resources */,
 			);
@@ -376,8 +418,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D507AC9F25A137FD0064861D /* IconTableViewController.swift in Sources */,
+				D556F51825B249DD003DC2FC /* UIDeviceExtension.swift in Sources */,
 				D5D44A672525A2530030A933 /* BarEntry.swift in Sources */,
 				D5EA75762526F08600493960 /* DoubleExtension.swift in Sources */,
+				D507ACA325A1386B0064861D /* Icon.swift in Sources */,
 				D5D44A4B2525A16F0030A933 /* DataEntry.swift in Sources */,
 				D556E11C253E6A8E0066898B /* Industry.swift in Sources */,
 				D5EA7594252ABA8000493960 /* MenuTableViewController.swift in Sources */,
@@ -391,8 +436,11 @@
 				D57B3064252176560023D7D5 /* Company.swift in Sources */,
 				D5D44A41252553580030A933 /* ViewExtension.swift in Sources */,
 				D5D44A632525A23D0030A933 /* BarChartController.swift in Sources */,
+				D5E7019C254CD1BE003D6A02 /* CompanySummaryTableViewCell.swift in Sources */,
 				D5EA757B2526F89A00493960 /* CompanyDetailCollectionViewCell.swift in Sources */,
+				D5E70190254CCE5B003D6A02 /* CompanyProfileTableViewController.swift in Sources */,
 				D5D44A532525A1C50030A933 /* UIBezierPathExtension.swift in Sources */,
+				D5E70196254CD0E6003D6A02 /* CompanyInfoTableViewCell.swift in Sources */,
 				D57B305C2521762B0023D7D5 /* CompanyController.swift in Sources */,
 				D5D44A5F2525A21F0030A933 /* BarChart.swift in Sources */,
 				D5D44A5B2525A2040030A933 /* ArrayExtension.swift in Sources */,
@@ -501,7 +549,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -556,7 +604,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -579,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ddjacobsen17.Market-cApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -600,7 +648,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ddjacobsen17.Market-cApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Enum for UIMenu on main VC
 enum Industry: String {
     case all = "All"
     case automotive = "Automotive"
